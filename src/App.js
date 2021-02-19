@@ -7,20 +7,26 @@ import { Container } from "semantic-ui-react";
 import ImageList from "./ImageList";
 
 class App extends React.Component {
+  state = {
+    images: []
+  };
   // check use of async here
   onSearchSubmit = async (term) => {
     const response = await unsplash.get("/search/photos", {
       params: { query: term }
     });
 
-    console.log(response);
+    this.setState({
+      images: response.data.results
+    });
   };
 
   render() {
     return (
       <Container style={{ margin: 20 }}>
         <SearchBar onSubmit={this.onSearchSubmit} />
-        <ImageList images = {this.state.images}/>
+        {/* Found {this.state.images.length} images */}
+        <ImageList images={this.state.images} />
       </Container>
     );
   }
